@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -10,31 +11,34 @@ public class Player : MonoBehaviour
     private bool _isOnAir;
     private float _horizontalInput;
     public LayerMask GroundLayerMask;
+    private Animator _anim;
+    public float distance = 1.5f;
 
     void Start()
     {
+      
+    }
+    void Awake()
+    {
         _rb = GetComponent<Rigidbody2D>();
-        if (_rb == null)
-        {
-            Debug.LogError("Rigidbody2D chua duoc gan vao Player!");
-        }
+        _anim = GetComponent<Animator>();
     }
     void Update()
     {
-        
-    
-    }
-    void FixedUpdate()
-    {
-        _horizontalInput = Input.GetAxis("Horizontal");
+        HandleAnimation();
         Flip(_horizontalInput);
         GroundCheck();
 
+    }
+    void FixedUpdate()
+    {
+   
         // Di chuyen ngang
         _rb.linearVelocity = new Vector2(_horizontalInput * Speed, _rb.linearVelocity.y);
     }
     public void Move(CallbackContext ctx)
     {
+       
         Vector2 movement = ctx.ReadValue<Vector2>();
         
         _horizontalInput = movement.x;
@@ -64,13 +68,30 @@ public class Player : MonoBehaviour
 
     void GroundCheck()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.2f, GroundLayerMask);
-        Debug.DrawRay(transform.position, Vector2.down * 1.2f, Color.red);
-        _isOnAir = hit.collider == null;
+        if (Physics2D.Raycast(transform.position, Vector2.down, distance, GroundLayerMask))
+        {
+            _isOnAir = false;
+            _anim.SetBool("IsGround", true);
+        }
+        else
+        {
+            _isOnAir = true;
+            _anim.SetBool("IsGround", false);
+        }
+
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+   void OnDrawGizmos()
     {
-        Debug.Log("Va cham voi: " + collision.name);
+        Gizmos.DrawLine(transform.position, transform.position - new Vector3(0f, distance, 0f));
+    }
+    void HandleAnimation()
+    {
+        _anim.SetFloat("xInput", _horizontalInput);
+        _anim.SetFloat("yInput", _rb.linearVelocity.y);
+    }
+    public void Attack()
+    {
+        _anim.SetTrigger
     }
 }
