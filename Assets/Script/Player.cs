@@ -13,7 +13,9 @@ public class Player : MonoBehaviour
     public LayerMask GroundLayerMask;
     private Animator _anim;
     public float distance = 1.5f;
-
+    private StateMachine _stateMachine;
+    private Vector2 _moveInput;
+    public Vector2 MoveInput => _moveInput;
     void Start()
     {
       
@@ -22,13 +24,16 @@ public class Player : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        
+        var idleState = new IdleState(this);
+        _stateMachine.ChangeState(idleState);
     }
     void Update()
     {
         HandleAnimation();
         Flip(_horizontalInput);
         GroundCheck();
-
+_stateMachine.CurrentState.Update();
     }
     void FixedUpdate()
     {
@@ -92,6 +97,6 @@ public class Player : MonoBehaviour
     }
     public void Attack()
     {
-        _anim.SetTrigger
+        _anim.SetTrigger("Attack1");
     }
 }
