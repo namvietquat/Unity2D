@@ -1,16 +1,19 @@
-using UnityEngine;
-
 public class JumpState : StateBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public JumpState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
     {
-        
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        base.Enter();
+        _anim.SetBool("IsGround", false);
+    }
+    public override void Update()
+    {
+        base.Update();
+        if (_rb.linearVelocity.y < 0)
+        {
+            _stateMachine.ChangeState(_player.FallState);
+        }
     }
 }

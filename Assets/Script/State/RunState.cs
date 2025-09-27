@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class RunState : StateBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public RunState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        base.Enter();
+
+    }
+    public override void Update()
+    {
+        _rb.linearVelocity = new Vector2(_player.MoveInput.x * _player.MoveSpeed, _rb.linearVelocity.y);
+        if (_player.MoveInput.x == 0)
+        {
+            _stateMachine.ChangeState(_player.IdleState);
+        }
+        if (_player.JumpInput != 0)
+        {
+            _stateMachine.ChangeState(_player.JumpState);
+        }
+        base.Update();
     }
 }

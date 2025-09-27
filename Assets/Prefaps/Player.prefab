@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2585396992462299392}
   - component: {fileID: 6350830580599585299}
   - component: {fileID: 8898588534094958958}
-  - component: {fileID: 5476926043816762185}
+  - component: {fileID: 7444638437484374499}
   - component: {fileID: 875351526346275864}
   - component: {fileID: 2316480392666933133}
   m_Layer: 0
@@ -39,6 +39,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2585396992462299392
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -84,6 +85,7 @@ SpriteRenderer:
   m_SortingLayerID: -331402471
   m_SortingLayer: 5
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: ac9762ccd4eb0f14995bb583a419e776, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -93,7 +95,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!70 &6350830580599585299
 CapsuleCollider2D:
@@ -159,7 +160,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5476926043816762185
+--- !u!114 &7444638437484374499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,15 +169,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3087117326222113845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e3a32dbc455cf44a7c60ab14b15b24, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d72f1ef70ae2c140a851a60f3b7265a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 3
-  JumpForce: 5
-  GroundLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  distance: 1.5
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  _moveSpeed: 5
+  _jumpForce: 2
+  _detectGroundDistance: 0.7
 --- !u!114 &875351526346275864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,9 +202,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5476926043816762185}
+      - m_Target: {fileID: 3087117326222113845}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Move
+        m_MethodName: 
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -220,7 +218,7 @@ MonoBehaviour:
     m_ActionName: Player/Move
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5476926043816762185}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
@@ -234,6 +232,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1ae0b624-09f2-4b97-bfab-24d6c37e8ec0
     m_ActionName: 'Player/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 472f5787-3ce5-4168-81fb-64b2535a8aaf
+    m_ActionName: 'PlayerControl/Attack1[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerControl
